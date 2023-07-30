@@ -53,6 +53,7 @@ public class ProductController {
             updateProduct2.setProduct_name(product.getProduct_name());
             updateProduct2.setProduct_price(product.getProduct_price());
             updateProduct2.setDescription(product.getDescription());
+            updateProduct2.setAvg(product.getAvg());
            
             
            Product createproduct = productRepository.save(updateProduct2);
@@ -61,10 +62,10 @@ public class ProductController {
 
             return ResponseEntity.ok(createproduct);
     }
-
+ 
 
      //get  by ID
-    @GetMapping("/product/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Product> getItemById(@PathVariable Long id) {
         Product product = productRepository.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException("Invalid Id"));
@@ -72,7 +73,7 @@ public class ProductController {
     }
 
     //delete product
-    @DeleteMapping("/product/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Map<String,Boolean>> deleteProduct(@PathVariable("id") Long id) {
         Product findProduct = productRepository.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException("User not found"));

@@ -1,5 +1,6 @@
 package com.example.projectSpringboot.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,8 +18,10 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private Long product_Id;
+     @Column(unique = true)
     private String product_name;
     private int product_price;
     private String description;
+    private int avg;
     
 }

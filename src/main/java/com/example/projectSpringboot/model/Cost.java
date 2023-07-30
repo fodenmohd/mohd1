@@ -2,8 +2,10 @@ package com.example.projectSpringboot.model;
 
 
 
+import java.time.LocalDate;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,5 +26,9 @@ public class Cost{
     private Long item_Id;
     private int quantity;
     private int total;
-    private Date date;
+      @Column(unique = true)
+    private LocalDate date;
+    private Long product_Id;
+    private Long totalValue;
+    private Long userId;
 }

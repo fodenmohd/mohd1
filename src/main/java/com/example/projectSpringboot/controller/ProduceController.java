@@ -1,5 +1,6 @@
 package com.example.projectSpringboot.controller;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +36,16 @@ public class ProduceController {
     public List<Produce> getAllProduce() {
         return produceRepository.findAll();
     }
+
+    @GetMapping("/GetCostAndProduced")
+    public  List<Map<String, Object>> getCostandProduced(){
+        return produceRepository.getCostandProduced();
+    }
     
+    @GetMapping("/GetCostAndProduced/{startDate}/{endDate}")
+    public  List<Map<String, Object>> getCostandProducedDate(@PathVariable("startDate") String startDate ,@PathVariable("endDate") String endDate){
+        return produceRepository.getCostandProducedByDate(LocalDate.parse(startDate),LocalDate.parse(endDate) );
+    }
 
      // post produce
     @PostMapping("/CreateProduce")
@@ -54,6 +64,7 @@ public class ProduceController {
             updateProduce2.setProduct_Id(produce.getProduct_Id());
             updateProduce2.setQuantity(produce.getQuantity());
             updateProduce2.setTotal_Amount(produce.getTotal_Amount());
+            updateProduce2.setDate(produce.getDate());
 
         Produce createproduce = produceRepository.save(updateProduce2);
 

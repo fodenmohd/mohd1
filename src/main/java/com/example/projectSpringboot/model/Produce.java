@@ -1,5 +1,8 @@
 package com.example.projectSpringboot.model;
 
+import java.time.LocalDate;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +21,9 @@ public class Produce {
     private Long produce_Id;
     private Long product_Id;
     private int quantity;
-    private int Total_Amount;
+    private Long Total_Amount;
+      @Column(unique = true)
+    private LocalDate date;
+    private Long userId;
     
 }
