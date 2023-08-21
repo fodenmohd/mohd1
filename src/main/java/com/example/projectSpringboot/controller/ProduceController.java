@@ -44,7 +44,7 @@ public class ProduceController {
     
     @GetMapping("/GetCostAndProduced/{startDate}/{endDate}")
     public  List<Map<String, Object>> getCostandProducedDate(@PathVariable("startDate") String startDate ,@PathVariable("endDate") String endDate){
-        return produceRepository.getCostandProducedByDate(LocalDate.parse(startDate),LocalDate.parse(endDate) );
+        return produceRepository.getCostandProducedByDate(startDate,endDate);
     }
 
      // post produce
@@ -53,8 +53,6 @@ public class ProduceController {
         return produceRepository.save(produce);
     }
   
-
-
      // update produce
        @PutMapping("/UpdateProduce/{id}")
     public ResponseEntity<?> updateProduce(@PathVariable("id") Long id, @RequestBody Produce produce) {

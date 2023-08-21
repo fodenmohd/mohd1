@@ -3,6 +3,7 @@ package com.example.projectSpringboot.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.projectSpringboot.exception.ResourceNotFoundException;
 import com.example.projectSpringboot.model.Item;
+import com.example.projectSpringboot.model.Product;
 import com.example.projectSpringboot.repository.ItemRepository;
 
 
@@ -36,10 +38,20 @@ public class ItemController {
     }
 
     // post item
-    @PostMapping("/CreateItem")
-    public Item addItem(@RequestBody Item item) {
-        return itemRepository.save(item);
+    // @PostMapping("/CreateItem")
+    // public Item addItem(@RequestBody Item item) {
+    //     return itemRepository.save(item);
+    // }
+
+     @PostMapping("/CreateItem")
+    public Item addProduct(@RequestBody Item item) {
+        Item item2 = new Item();
+            item2.setItem_Name(item.getItem_Name());
+            item2.setItem_price(item.getItem_price());
+            item2.setItem_Description(item.getItem_Description());
+            return itemRepository.save(item2);
     }
+    
   
 
     //   update item
@@ -71,6 +83,17 @@ public class ItemController {
     // }
 
 
+ @GetMapping("/get_item_by_id/{id}")
+    public Item getItemById (@PathVariable Long id){
+        Optional<Item> p = itemRepository.findById(id);
+        if(p.isPresent()){
+            return p.get();
+        }else{
+            return new Item();
+        }
+    }
+
+
 
 
     
@@ -88,5 +111,5 @@ public class ItemController {
  
     }
 
-    
+  
 }

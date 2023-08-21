@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -23,5 +24,9 @@ public class Product {
     private int product_price;
     private String description;
     private int avg;
+    private int isUsed;
     
+
+    @ManyToOne
+    private Produce produce;
 }

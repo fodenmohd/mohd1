@@ -15,7 +15,7 @@ public interface ProduceRepository extends JpaRepository<Produce,Long>{
 
 
 
-     @Query(value = "SELECT cost.date, cost.quantity, cost.total, produce.total_amount FROM user INNER JOIN cost ON cost.user_id = user.user_id INNER "+
-     "JOIN produce ON produce.user_id = user.user_id where cost.date = produce.date  and cost.date BETWEEN ?1 and ?2 ;", nativeQuery = true)
-     List<Map<String, Object>> getCostandProducedByDate(LocalDate starDate , LocalDate enDate); 
+     @Query(value = "SELECT cost.date, cost.quantity, cost.total, produce.total_amount FROM login INNER JOIN cost ON cost.user_id = login.id INNER "+
+     "JOIN produce ON produce.user_id = login.id where cost.date = produce.date  and cost.date BETWEEN ?1 and ?2 ;", nativeQuery = true)
+     List<Map<String, Object>> getCostandProducedByDate(String starDate , String enDate); 
 }

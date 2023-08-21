@@ -1,8 +1,11 @@
 package com.example.projectSpringboot.controller;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -39,37 +42,44 @@ public class ProductController {
      
     // post product
     @PostMapping("/product")
-    public Product addProduct(@RequestBody Product product) {
-        return productRepository.save(product);
+    public Product addProduct(@RequestBody Product p) {
+        Product p2 = new Product();
+                p2.setAvg(p.getAvg());
+                p2.setDescription(p.getDescription());
+                p2.setProduct_name(p.getProduct_name());
+                p2.setProduct_price(p.getProduct_price());
+                p2.setIsUsed(p.getIsUsed());
+            return productRepository.save(p2);
     }
     
 
     // update product
-       @PutMapping("/product/{id}")
-    public ResponseEntity<?> updateProduct(@PathVariable("id") Long id, @RequestBody Product product) {
-        Product updateProduct2 = productRepository.findById(id)
-        .orElseThrow(() ->new ResourceNotFoundException("product not found"));
-      
-            updateProduct2.setProduct_name(product.getProduct_name());
-            updateProduct2.setProduct_price(product.getProduct_price());
-            updateProduct2.setDescription(product.getDescription());
-            updateProduct2.setAvg(product.getAvg());
-           
-            
-           Product createproduct = productRepository.save(updateProduct2);
-        
-          
+       @PutMapping("/update_product/{id}")
+       @Transactional
+       public Optional<Product> updateProduct(@PathVariable("id") Long id,@RequestBody Product p){
+            return productRepository.findById(id).map(p2->{
+                p2.setAvg(p.getAvg());
+                p2.setDescription(p.getDescription());
+                p2.setProduct_name(p.getProduct_name());
+                p2.setProduct_price(p.getProduct_price());
+                p2.setIsUsed(p.getIsUsed());
+                return p2;
+            });
+       }
 
-            return ResponseEntity.ok(createproduct);
-    }
  
 
      //get  by ID
-    @GetMapping("/{id}")
-    public ResponseEntity<Product> getItemById(@PathVariable Long id) {
-        Product product = productRepository.findById(id)
-        .orElseThrow(() -> new ResourceNotFoundException("Invalid Id"));
-        return ResponseEntity.ok(product);
+    @GetMapping("/get_product_by_id/{id}")
+
+
+    public Product getProductById(@PathVariable("id") Long id){
+        Optional<Product> p = productRepository.findById(id);
+        if(p.isPresent()){
+            return p.get();
+        }else{
+            return new Product();
+        }
     }
 
     //delete product
@@ -85,15 +95,15 @@ public class ProductController {
  
     }
 
-
-        
-
-
-    
-
-
+    @GetMapping("/getCurrentProducts")
+    public List<Product> getCurrentProduct()
+    {
+        List<Product> k = productRepository.getCurrentProduct();
+        return k;
+    }
     
     }
+
 
 
 
